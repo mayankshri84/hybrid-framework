@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<screens>
+	<screen id="login">
+		<object name="loginlink">xpath=/html/body/div[1]/header/div/div[2]/div[2]/a[1]</object>
+		<object name="username">id=login_field</object>
+		<object name="password">id=password</object>
+		<object name="signin">name=commit</object>
+	</screen>
+
+</screens>
