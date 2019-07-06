@@ -15,6 +15,8 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public class Utils {
 		// System.out.println(new Utils().xmlParser("home","username"));
 		Utils utils = new Utils();
 		System.out.println(utils.storyReader("Regression"));;
+		utils.writeProperty("mayank", "priyank");
 		
 		
 	}
@@ -114,16 +117,14 @@ public class Utils {
 	
 	
 	public void writeProperty(String key, String value){
-		try (OutputStream output = new FileOutputStream("system.properties")) {
-
-            Properties prop = new Properties();
-            prop.setProperty(key, value);
-            prop.store(output, null);
-            System.out.println(prop);
-
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
+		try {
+			PropertiesConfiguration config = new PropertiesConfiguration("system.properties");
+			config.setProperty(key, value);
+			config.save();
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
