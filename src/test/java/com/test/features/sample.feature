@@ -22,10 +22,10 @@ Feature: Title of your feature
 
   @Scenario1
   Scenario: Testing github login..
-    Given user launching "chrome" broswer and open "https://github.com/" app
+    Given user launching "chrome" broswer and open "url" app
     Then user click on "loginlink" button on "login" screen
-    When user type "mayankshri84@gmail.com" on "username" in "login" screen
-    Then user type "Roli_2018" on "password" in "login" screen
+    When user type "username" on "username" in "login" screen
+    Then user type "password" on "password" in "login" screen
     And user click on "signin" button on "login" screen
     And user close browser
 
@@ -33,9 +33,9 @@ Feature: Title of your feature
   #Then user hover on "element1" and click on "element2" on "home" screen
   @Scenario2
   Scenario: Title of your scenario
-    Given user launching "chrome" broswer and open "https://github.com/" app
+    Given user launching "chrome" broswer and open "url" app
     Then user click on "loginlink" button on "login" screen
-    When user type "mayankshri84@gmail.com" on "username" in "login" screen
-    Then user type "Roli_2018" on "password" in "login" screen
+    When user type "username" on "username" in "login" screen
+    Then user type "password" on "password" in "login" screen
     And user click on "signin" button on "login" screen
     And user close browser

@@ -30,7 +30,7 @@ public class StepDef {
 
 	@Given("user launching {string} broswer and open {string} app")
 	public void user_launching_broswer_and_open_app(String browser,String url) {
-		//String application = utils.dataReader(dataRef, key);
+		String application = utils.dataReader(utils.getProperty("test.data"), url);
 		if(browser.equalsIgnoreCase("IE")){
 			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
 			capabilities.setCapability(CapabilityType.BROWSER_NAME, "internet explorer");
@@ -39,7 +39,7 @@ public class StepDef {
 			driver = new InternetExplorerDriver(capabilities);
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-			driver.get(url);
+			driver.get(application);
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		}
 		else if(browser.equalsIgnoreCase("Chrome")){
@@ -47,7 +47,7 @@ public class StepDef {
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-			driver.get(url);
+			driver.get(application);
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			
 		}
@@ -85,29 +85,31 @@ public class StepDef {
 
 	@Then("user type {string} on {string} in {string} screen")
 	public void user_type_on_in_screen(String text, String ele, String screen) {
+		String typeText = utils.dataReader(utils.getProperty("test.data"), text);
 		String element = new Utils().xmlParser(ele, screen);
 		WebElement webElement = driver.findElement(webDriverUtils.getBy(element));
 		try{
 			Thread.sleep(2000);
-			webElement.sendKeys(text);
+			webElement.sendKeys(typeText);
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-			report.appendReport(report.reportBody(true, "User type "+text+" on "+ele+" in "+screen+" screen", ""));
+			report.appendReport(report.reportBody(true, "User type "+typeText+" on "+ele+" in "+screen+" screen", ""));
 			return;
 		}
 		catch(Exception e){
 			
 		}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		js.executeScript("document.getElementById('"+webElement.getAttribute("id")+"').value='"+text+"';");
-		report.appendReport(report.reportBody(true, "User type "+text+" on "+ele+" in "+screen+" screen", ""));
+		js.executeScript("document.getElementById('"+webElement.getAttribute("id")+"').value='"+typeText+"';");
+		report.appendReport(report.reportBody(true, "User type "+typeText+" on "+ele+" in "+screen+" screen", ""));
 	}
 
 	@Then("user select {string} on {string} in {string} screen")
 	public void user_select_on_in_screen(String text, String ele, String screen) {
+		String selectText = utils.dataReader(utils.getProperty("test.data"), text);
 		String element = new Utils().xmlParser(ele, screen);
-	    new Select(driver.findElement(webDriverUtils.getBy(element))).selectByVisibleText(text);
+	    new Select(driver.findElement(webDriverUtils.getBy(element))).selectByVisibleText(selectText);
 	    driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-	    report.appendReport(report.reportBody(true, "user select "+text+" on "+ele+" in "+screen+" screen", ""));
+	    report.appendReport(report.reportBody(true, "user select "+selectText+" on "+ele+" in "+screen+" screen", ""));
 	   
 	}
 

@@ -8,12 +8,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,7 +28,8 @@ public class Utils {
 	public static void main(String[] args) {
 		// System.out.println(new Utils().xmlParser("home","username"));
 		Utils utils = new Utils();
-		utils.dataReader("dataref1", "username");
+		System.out.println(utils.storyReader("Regression"));;
+		
 		
 	}
 
@@ -92,18 +96,20 @@ public class Utils {
 		return str.toString();
 	}
 
-	public void dataReader(String dataRef, String key) {
+	public String dataReader(String dataRef, String key) {
+		String value = null;
 		try
 		{
 			String json = readFile("src/test/java/files/data.json");
 			JSONObject object = new JSONObject(json);
 			JSONArray array = (JSONArray) object.get(dataRef);
 			JSONObject obj = (JSONObject) array.get(0);
-			System.out.println(obj.get(key));
+			value = obj.get(key).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return value;
 	}
 	
 	
@@ -132,6 +138,25 @@ public class Utils {
             ex.printStackTrace();
         }
 		return value;
+	}
+	
+	
+	public List<String> storyReader(String testingType){
+		JSONArray array = null;
+		List<String> storyOrder = new ArrayList<String>();
+		try
+		{
+			String json = readFile("userstories.json");
+			JSONObject object = new JSONObject(json);
+			array = (JSONArray) object.get(testingType);
+			for(int i = 0; i<array.length();i++){
+				storyOrder.add(array.get(i).toString().replace("\"", "").replace("{","").replace("}",""));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return storyOrder;
 	}
 
 }
