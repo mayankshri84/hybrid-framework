@@ -2,7 +2,13 @@ package com.test.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,15 +20,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.test.utils.ElementIsNotInObjectRepositoryException;
-import com.test.utils.Utils;
-
 public class Utils {
 
 	public static void main(String[] args) {
 		// System.out.println(new Utils().xmlParser("home","username"));
 		Utils utils = new Utils();
 		utils.dataReader("dataref1", "username");
+		
 	}
 
 	public String xmlParser(String name, String screen) {
@@ -100,6 +104,34 @@ public class Utils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public void writeProperty(String key, String value){
+		try (OutputStream output = new FileOutputStream("system.properties")) {
+
+            Properties prop = new Properties();
+            prop.setProperty(key, value);
+            prop.store(output, null);
+            System.out.println(prop);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+	}
+	
+	
+	public String getProperty(String key){
+		String value = null;
+		try (InputStream input = new FileInputStream("system.properties")) {
+			Properties prop = new Properties();
+            prop.load(input);
+            value = prop.getProperty(key);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return value;
 	}
 
 }

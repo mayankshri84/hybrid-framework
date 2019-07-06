@@ -1,0 +1,10 @@
+{
+	"regression": [
+		{
+			"@Scenario1": "dataref1"
+		},
+		{
+			"@Scenario2": "dataref1"
+		}
+	]
+}

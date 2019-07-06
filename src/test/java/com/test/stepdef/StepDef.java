@@ -25,12 +25,12 @@ public class StepDef {
 	private WebDriver driver;
 	WebDriverUtils webDriverUtils = new WebDriverUtils(driver);
 	HtmlReporter report = new HtmlReporter();
-	
+	Utils utils = new Utils();
 
 
 	@Given("user launching {string} broswer and open {string} app")
 	public void user_launching_broswer_and_open_app(String browser,String url) {
-		
+		//String application = utils.dataReader(dataRef, key);
 		if(browser.equalsIgnoreCase("IE")){
 			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
 			capabilities.setCapability(CapabilityType.BROWSER_NAME, "internet explorer");
